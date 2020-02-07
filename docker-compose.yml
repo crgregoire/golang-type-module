@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+  satya:
+    image: golang:latest
+    command: bash -c "go get ... && go build -o main . && ./main"
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_DATABASE=tespo_docker
+      - MYSQL_USER=tespo_user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
